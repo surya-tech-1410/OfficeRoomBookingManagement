@@ -36,7 +36,7 @@ public class GoogleController {
 	private static com.google.api.services.calendar.Calendar client;
 
 	GoogleClientSecrets clientSecrets;
-    GoogleAuthorizationCodeFlow flow;
+        GoogleAuthorizationCodeFlow flow;
 	Credential credential;
 	
 	@GetMapping("/notification/google")
@@ -62,7 +62,7 @@ public class GoogleController {
 	
 			TokenResponse response = flow.newTokenRequest(code).setRedirectUri("http://localhost:8080/login/oauth2/code/google").execute();
 			System.out.println(response);		
-			credential = flow.createAndStoreCredential(response, "suryavmsv@gmail.com");
+			credential = flow.createAndStoreCredential(response, "YOUR_PRIMARY_EMAIL");
 			System.out.println("Credential : " + credential);
 			client = new com.google.api.services.calendar.Calendar.Builder(httpTransport, JSON_FACTORY, credential)
 					.setApplicationName("Google Calendar App test").build();
@@ -97,8 +97,8 @@ public class GoogleController {
 		AuthorizationCodeRequestUrl authorizationUrl;
 		if (flow == null) {
 			Details web = new Details();
-			web.setClientId("234356689915-1ld1g0ma0fp5jpk2jvbn6v9hrbrhnn2m.apps.googleusercontent.com");
-			web.setClientSecret("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");
+			web.setClientId("YOUR_GOOGLE_CLIENT_ID");
+			web.setClientSecret("YOUR_GOOGLE_CLIENT_SECRET");
 			clientSecrets = new GoogleClientSecrets().setWeb(web);
 			 httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 			flow = new GoogleAuthorizationCodeFlow.Builder(httpTransport, JSON_FACTORY, clientSecrets,
